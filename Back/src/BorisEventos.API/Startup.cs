@@ -33,6 +33,7 @@ namespace BorisEventos.API
             services.AddDbContext<DataContext>(
                 context => context.UseSqlServer(Configuration.GetConnectionString("Default"))
             );
+            services.AddCors();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -56,6 +57,10 @@ namespace BorisEventos.API
 
             app.UseAuthorization();
 
+            app.UseCors(access => access.AllowAnyHeader()
+                                        .AllowAnyMethod()
+                                        .AllowAnyOrigin());
+                                        
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
